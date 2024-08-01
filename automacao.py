@@ -89,7 +89,7 @@ def test_selected_events(selected_events, buyer_info, webhook_url):
     return results
 
 # Interface Streamlit
-st.title("Make Flow Testing Dashboard - CC")
+st.title("Payload de Testes - CC")
 
 # Entrada do webhook URL
 st.write("Enter the webhook URL or select to use the default:")
