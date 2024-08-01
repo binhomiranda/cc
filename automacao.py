@@ -99,7 +99,7 @@ webhook_url = st.text_input("Webhook URL", DEFAULT_WEBHOOK_URL if use_default_we
 st.write("Preencha com os dados simulados de um comprador (deixando sem preencher, o sistema emula um usuário):")
 buyer_name = st.text_input("Name", "")
 buyer_email = st.text_input("Email", "")
-buyer_phonenumber = st.text_input("Phone Number", "")
+buyer_phonenumber = st.text_input("Phone Number (Ex.: +552012345678)", "")
 
 buyer_info = {
     "name": buyer_name if buyer_name else "maises pereira",
