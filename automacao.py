@@ -1,4 +1,3 @@
-# Versão 1.0
 import streamlit as st
 import requests
 import json
@@ -89,7 +88,7 @@ def test_selected_events(selected_events, buyer_info, webhook_url):
     return results
 
 # Interface Streamlit
-st.title("Payload de Testes - CC")
+st.title("Make Flow Testing Dashboard - CC")
 
 # Entrada do webhook URL
 st.write("Enter the webhook URL or select to use the default:")
@@ -153,3 +152,21 @@ for log in st.session_state.test_log:
     st.json(log['payload'])  # Mostrar payload enviado
     if log['status'] == "Error":
         st.error(log['error'])
+
+# Adicionar tabela de eventos com descrição
+st.write("## Eventos e Descrições")
+
+event_descriptions = {
+    "Subscription_Canceled": "O evento ocorre quando uma assinatura é cancelada.",
+    "Payment_Chargeback": "O evento ocorre quando um pagamento sofre um chargeback.",
+    "Recurrent_Payment": "O evento ocorre quando um pagamento recorrente é realizado.",
+    "Subscription_Renewal_Pending": "O evento ocorre quando uma renovação de assinatura está pendente.",
+    "Purchase_Request_Expired": "O evento ocorre quando uma solicitação de compra expira.",
+    "Product_access_ended": "O evento ocorre quando o acesso a um produto termina."
+}
+
+event_data = [{"Event": event, "Description": description} for event, description in event_descriptions.items() if event in events]
+
+st.table(event_data)
+
+st.write("Para maiores informações: [Lastlink Webhook Events](https://support.lastlink.com/pt-BR/articles/7238888-como-configurar-o-webhook-na-lastlink)")
