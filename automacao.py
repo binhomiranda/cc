@@ -88,7 +88,7 @@ def test_selected_events(selected_events, buyer_info, webhook_url):
     return results
 
 # Interface Streamlit
-st.title("Teste de PAYLOAD - CC")
+st.title("Make Flow Testing Dashboard - CC")
 
 # Entrada do webhook URL
 st.write("Enter the webhook URL or select to use the default:")
@@ -99,7 +99,7 @@ webhook_url = st.text_input("Webhook URL", DEFAULT_WEBHOOK_URL if use_default_we
 st.write("Preencha com os dados simulados de um comprador (deixando sem preencher, o sistema emula um usuário):")
 buyer_name = st.text_input("Name", "")
 buyer_email = st.text_input("Email", "")
-buyer_phonenumber = st.text_input("Phone Number (Ex.: +552012345678)", "")
+buyer_phonenumber = st.text_input("Phone Number", "")
 
 buyer_info = {
     "name": buyer_name if buyer_name else "maises pereira",
@@ -115,7 +115,8 @@ events = [
     "Recurrent_Payment",
     "Subscription_Renewal_Pending",
     "Purchase_Request_Expired",
-    "Product_access_ended"
+    "Product_access_ended",
+    "Subscription_Product_Access"
 ]
 selected_events = st.multiselect("Events", events)
 
@@ -162,7 +163,8 @@ event_descriptions = {
     "Recurrent_Payment": "O evento ocorre quando um pagamento recorrente é realizado.",
     "Subscription_Renewal_Pending": "O evento ocorre quando uma renovação de assinatura está pendente.",
     "Purchase_Request_Expired": "O evento ocorre quando uma solicitação de compra expira.",
-    "Product_access_ended": "O evento ocorre quando o acesso a um produto termina."
+    "Product_access_ended": "O evento ocorre quando o acesso a um produto termina.",
+    "Subscription_Product_Access": "O evento ocorre quando o acesso ao produto é liberado após a compra aprovada."
 }
 
 event_data = [{"Event": event, "Description": description} for event, description in event_descriptions.items() if event in events]
