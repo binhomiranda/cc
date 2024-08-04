@@ -96,15 +96,19 @@ use_default_webhook = st.checkbox("Use Default Webhook URL", value=False)
 webhook_url = st.text_input("Webhook URL", DEFAULT_WEBHOOK_URL if use_default_webhook else "")
 
 # Entrada de informações do comprador
-st.write("Preencha com os dados simulados de um comprador (deixando sem preencher, o sistema emula um usuário):")
+st.write("Preencha com os dados simulados de um comprador:")
 buyer_name = st.text_input("Name", "")
-buyer_email = st.text_input("Email", "")
-buyer_phonenumber = st.text_input("Phone Number", "")
+buyer_email = st.text_input("Email", "", help="O campo de email é obrigatório")
+buyer_phonenumber = st.text_input("Phone Number", "", help="O campo de telefone é obrigatório")
+
+# Verificação se os campos obrigatórios estão preenchidos
+if not buyer_email or not buyer_phonenumber:
+    st.warning("Por favor, preencha os campos obrigatórios: Email e Phone Number.")
 
 buyer_info = {
     "name": buyer_name if buyer_name else "maises pereira",
-    "email": buyer_email if buyer_email else "test.email@mail.com",
-    "phonenumber": buyer_phonenumber if buyer_phonenumber else "+5500987645312"
+    "email": buyer_email,
+    "phonenumber": buyer_phonenumber
 }
 
 # Seleção de eventos
@@ -122,23 +126,23 @@ selected_events = st.multiselect("Events", events)
 
 # Botão para enviar eventos selecionados
 if st.button("Send Selected Events"):
-    if selected_events and webhook_url:
+    if selected_events and webhook_url and buyer_email and buyer_phonenumber:
         st.write("Sending selected events...")
         test_results = test_selected_events(selected_events, buyer_info, webhook_url)
         st.write("Selected events sent.")
         st.write(test_results)
     else:
-        st.warning("Please select at least one event and enter a valid webhook URL.")
+        st.warning("Please select at least one event, enter a valid webhook URL, and fill in the required fields.")
 
 # Botão para enviar todos os eventos
 if st.button("Send All Events"):
-    if webhook_url:
+    if webhook_url and buyer_email and buyer_phonenumber:
         st.write("Sending all events...")
         test_results = test_selected_events(events, buyer_info, webhook_url)
         st.write("All events sent.")
         st.write(test_results)
     else:
-        st.warning("Please enter a valid webhook URL.")
+        st.warning("Please enter a valid webhook URL and fill in the required fields.")
 
 # Mostrar logs dos testes
 if 'test_log' not in st.session_state:
